@@ -1,0 +1,19 @@
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)  # Initialize a Flask app instance
+
+tasks = []  # A list to store tasks added by the user
+
+@app.route('/')  # The root route of the app
+def index():
+    return render_template('index.html', tasks=tasks)  # Render the HTML template with the current list of tasks
+
+@app.route('/add', methods=['POST'])  # The route to handle form submission
+def add():
+    task = request.form['task']  # Get the task from the submitted form
+    tasks.append(task)  # Add the task to the list of tasks
+    return redirect(url_for('index'))  # Redirect the user back to the index route
+
+if __name__ == '__main__':
+    app.run(debug=True)  # Run the Flask app in debug mode
+
